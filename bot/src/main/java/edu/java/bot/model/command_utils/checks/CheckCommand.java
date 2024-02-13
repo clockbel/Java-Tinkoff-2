@@ -9,9 +9,9 @@ public final class CheckCommand {
 
     private final static String CORRECT_COMMAND = "OK";
     private final static String INCORRECT_COMMAND =
-        "Не обнаружено такой команды, для просмотра доступных комманд введите /help";
-    private final static String EMPTY_INPUT_TRACK = "Не введена ссылка после комманды";
-    private final static String MOST_INPUT_TRACK = "Введена больше 1 ссылки";
+        "No such command was found, type /help to view available commands";
+    private final static String EMPTY_INPUT_TRACK = "No link entered after the command";
+    private final static String MOST_INPUT_TRACK = "More than 1 link entered";
 
     public static String[] checkCommand(Message message) {
         String[] messageText = message.text().split(" ");
