@@ -12,7 +12,7 @@ public class StackOverflowClient {
         this.webClient = webClient;
     }
 
-    public Mono<QuestionResponse> fetchQuestion(int questionId) {
+    public Mono<QuestionResponse> fetchQuestion(long questionId) {
         return webClient.get()
             .uri("/questions/{id}?site=stackoverflow", questionId)
             .retrieve()
