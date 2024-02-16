@@ -14,7 +14,6 @@ public class QuestionResponse {
         this.items = items;
     }
 
-    //record ItemResponse(@JsonProperty("question_id") long id) {}
     public static class ItemResponse {
         @JsonProperty("question_id")
         private long questionId;
