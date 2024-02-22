@@ -2,6 +2,7 @@ package edu.java.scrapper;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
 import edu.java.client.GitHubClient;
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,7 +10,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.test.StepVerifier;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
+
 
 public class GitHubClientTest {
 
@@ -34,18 +38,18 @@ public class GitHubClientTest {
     }
 
     @Test
+    @SneakyThrows
     public void testFetchRepository() {
         // Настройка фиктивного ответа сервера
-        String responseBody = "{\"id\":  123, \"name\": \"test-repo\", \"full_name\": \"test-user/test-repo\"}";
-        wireMockServer.stubFor(get(urlEqualTo("/repos/test-user/test-repo"))
+        wireMockServer.stubFor(get(urlEqualTo("/repos/clockbel/Java-Tinkoff"))
             .willReturn(aResponse()
                 .withHeader("Content-Type", "application/json")
-                .withBody(responseBody)));
+                .withBody(Files.readString(Paths.get("src/test/resources/github-api.json")))));
 
         // Выполнение теста
-        StepVerifier.create(githubClient.fetchRepository("test-user", "test-repo"))
+        StepVerifier.create(githubClient.fetchRepository("clockbel", "Java-Tinkoff"))
             .assertNext(response -> {
-                Assertions.assertEquals("test-user/test-repo", response.fullName());
+                Assertions.assertEquals("clockbel/Java-Tinkoff", response.getFullName());
             })
             .verifyComplete();
     }

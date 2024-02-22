@@ -1,6 +1,6 @@
 package edu.java.client;
 
-import edu.java.response.QuestionResponse;
+import edu.java.response.stackoverflow.QuestionResponse;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
@@ -14,7 +14,14 @@ public class StackOverflowClient {
 
     public Mono<QuestionResponse> fetchQuestion(long questionId) {
         return webClient.get()
-            .uri("/questions/{id}?site=stackoverflow", questionId)
+            .uri("/questions/{question}?order=desc&sort=activity&site=stackoverflow", questionId)
+            .retrieve()
+            .bodyToMono(QuestionResponse.class);
+    }
+
+    public Mono<QuestionResponse> fetchAnswer(long questionId) {
+        return webClient.get()
+            .uri("/questions/{question}/answers?order=desc&site=stackoverflow", questionId)
             .retrieve()
             .bodyToMono(QuestionResponse.class);
     }
