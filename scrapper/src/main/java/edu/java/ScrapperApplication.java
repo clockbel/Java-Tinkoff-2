@@ -23,14 +23,18 @@ public class ScrapperApplication {
         GitHubClient gitHubClient = context.getBean(GitHubClient.class);
         Mono<RepositoryResponse> userResponseMono = gitHubClient.fetchRepository("clockbel", "Java-Tinkoff");
         userResponseMono.subscribe(user -> {
-            LOGGER.info("Репозиторий: " + user.getFullName() + "Дата создания: " + user.getCreatedAt());
+            LOGGER.info("Репозиторий: " + user.fullName() + "Дата создания: " + user.createdAt());
         });
         StackOverflowClient stackOverflowClient = context.getBean(StackOverflowClient.class);
         @SuppressWarnings("MagicNumber")
         long questionId = 1566516;
         Mono<QuestionResponse> questionResponseMono = stackOverflowClient.fetchQuestion(questionId);
         questionResponseMono.subscribe(questionResponse -> {
-            LOGGER.info("Номер вопроса: " + questionResponse.getItems().get(0).getQuestionId());
+            LOGGER.info("Номер вопроса: " + questionResponse.items().get(0).questionId());
         });
+//        StackOverflowClientConfiguration stackOverflowClient ;
+//        stackOverflowClient.fetchQuestion("1566516")
+//            .subscribe(response -> System.out.println("StackOverflow Question: " + response.getItems().get(0).getQuestionId()));
+//    }
     }
 }

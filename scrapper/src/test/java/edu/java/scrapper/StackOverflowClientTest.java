@@ -2,19 +2,21 @@ package edu.java.scrapper;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
 import edu.java.client.GitHubClient;
+import edu.java.client.StackOverflowClient;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.test.StepVerifier;
+import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
+import static com.github.tomakehurst.wiremock.client.WireMock.get;
+import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 
-import static com.github.tomakehurst.wiremock.client.WireMock.*;
 
-public class GitHubClientTest {
-
+public class StackOverflowClientTest {
     private WireMockServer wireMockServer;
-    private GitHubClient githubClient;
+    private StackOverflowClient stackOverflowClient;
 
     @BeforeEach
     public void setUp() {
@@ -25,7 +27,7 @@ public class GitHubClientTest {
             .baseUrl(wireMockServer.baseUrl())
             .build();
 
-        githubClient = new GitHubClient(webClient);
+        stackOverflowClient = new StackOverflowClient(webClient);
     }
 
     @AfterEach
@@ -36,17 +38,18 @@ public class GitHubClientTest {
     @Test
     public void testFetchRepository() {
         // Настройка фиктивного ответа сервера
-        String responseBody = "{\"id\":  123, \"name\": \"test-repo\", \"full_name\": \"test-user/test-repo\"}";
-        wireMockServer.stubFor(get(urlEqualTo("/repos/test-user/test-repo"))
+        String questionBody = "{\"items\": [{\"question_id\":  10111}]}";
+        wireMockServer.stubFor(get(urlEqualTo("/questions/10111?site=stackoverflow"))
             .willReturn(aResponse()
                 .withHeader("Content-Type", "application/json")
-                .withBody(responseBody)));
+                .withBody(questionBody)));
 
         // Выполнение теста
-        StepVerifier.create(githubClient.fetchRepository("test-user", "test-repo"))
+        StepVerifier.create(stackOverflowClient.fetchQuestion(10111))
             .assertNext(response -> {
-                Assertions.assertEquals("test-user/test-repo", response.fullName());
+                Assertions.assertEquals(10111, response.items().get(0).questionId());
             })
             .verifyComplete();
     }
 }
+
