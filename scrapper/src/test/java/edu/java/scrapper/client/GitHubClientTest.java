@@ -1,4 +1,4 @@
-package edu.java.scrapper;
+package edu.java.scrapper.client;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
 import edu.java.client.GitHubClient;
@@ -12,6 +12,7 @@ import reactor.test.StepVerifier;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.OffsetDateTime;
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 
 
@@ -50,6 +51,10 @@ public class GitHubClientTest {
         StepVerifier.create(githubClient.fetchRepository("clockbel", "Java-Tinkoff"))
             .assertNext(response -> {
                 Assertions.assertEquals("clockbel/Java-Tinkoff", response.getFullName());
+                Assertions.assertEquals(700324345, response.getId());
+                Assertions.assertEquals("https://api.github.com/repos/clockbel/Java-Tinkoff", response.getUrl());
+                Assertions.assertEquals("2023-10-04T11:35:24Z", response.getCreatedAt().toString());
+                Assertions.assertEquals("2024-02-03T12:50:24Z", response.getPushedAt().toString());
             })
             .verifyComplete();
     }
