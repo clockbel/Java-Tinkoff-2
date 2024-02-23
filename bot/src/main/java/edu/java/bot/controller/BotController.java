@@ -15,13 +15,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class BotController implements UpdatesListener {
     private TelegramBot telegramBot;
-    private UserBase userBase;
     private Map<String, Command> commandMap;
 
-    public BotController(TelegramBot telegramBot, UserBase userBase, Map<String, Command> commandMap) {
+    public BotController(TelegramBot telegramBot, Map<String, Command> commandMap) {
         telegramBot.setUpdatesListener(this);
         this.telegramBot = telegramBot;
-        this.userBase = userBase;
         this.commandMap = commandMap;
     }
 
