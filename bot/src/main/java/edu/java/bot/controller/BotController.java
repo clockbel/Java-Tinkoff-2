@@ -7,7 +7,6 @@ import com.pengrad.telegrambot.request.SendMessage;
 import com.pengrad.telegrambot.response.BaseResponse;
 import edu.java.bot.model.command_utils.checks.CheckCommand;
 import edu.java.bot.model.command_utils.commands.Command;
-import edu.java.bot.repository.UserBase;
 import java.util.List;
 import java.util.Map;
 import org.springframework.stereotype.Component;
