@@ -9,11 +9,15 @@ import edu.java.bot.repository.UserBase;
 import java.net.URL;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component("/untrack")
+@Qualifier("commands")
 public final class UntrackCommand implements Command {
     private final UserBase userBase;
+    private static final String COMMAND = "/untrack";
+    private static final String DESCRIPTION = "Untrack your URL";
 
     public UntrackCommand(UserBase userBase) {
         this.userBase = userBase;
@@ -21,12 +25,12 @@ public final class UntrackCommand implements Command {
 
     @Override
     public String command() {
-        return "/untrack";
+        return COMMAND;
     }
 
     @Override
     public String description() {
-        return "Untrack your URL";
+        return DESCRIPTION;
     }
 
     @Override

@@ -184,12 +184,11 @@ public class CommandTest {
         SendMessage message = commands.get("/help").handle(update);
         SendMessage result_message =
             new SendMessage(update.message().chat().id(), """
+                    /list - List of tracking URL
                     /start - Start the link tracker bot
-                    /help - List of command
                     /track - Track URL
                     /untrack - Untrack your URL
-                    /list - List of tracking URL
-                    """);
+                    /help - List of command""");
         assertThat(message.getParameters()).isEqualTo(result_message.getParameters());
     }
 

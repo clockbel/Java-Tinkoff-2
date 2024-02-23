@@ -7,11 +7,15 @@ import edu.java.bot.repository.UserBase;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component("/start")
+@Qualifier("commands")
 public final class StartCommand implements Command {
     private final UserBase userBase;
+    private static final String COMMAND = "/start";
+    private static final String DESCRIPTION = "Start the link tracker bot";
 
     public StartCommand(UserBase userBase) {
         this.userBase = userBase;
@@ -19,12 +23,12 @@ public final class StartCommand implements Command {
 
     @Override
     public String command() {
-        return "/start";
+        return COMMAND;
     }
 
     @Override
     public String description() {
-        return "Start the link tracker bot";
+        return DESCRIPTION;
     }
 
     @Override

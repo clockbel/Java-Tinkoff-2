@@ -4,18 +4,28 @@ import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
 import java.util.Map;
 import java.util.stream.Collectors;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component("/help")
 public final class HelpCommand implements Command {
+    private final Map<String, Command> commands;
+    private static final String COMMAND = "/help";
+    private static final String DESCRIPTION = "List of command";
+    private static final String DASH = " - ";
+
+    public HelpCommand(@Qualifier("commands") Map<String, Command> commands) {
+        this.commands = commands;
+    }
+
     @Override
     public String command() {
-        return "/help";
+        return COMMAND;
     }
 
     @Override
     public String description() {
-        return "List of command";
+        return DESCRIPTION;
     }
 
     @Override
@@ -24,9 +34,8 @@ public final class HelpCommand implements Command {
     }
 
     private String helpMessage() {
-        Map<String, Command> commands = Commands.commands();
-        return commands.entrySet().stream().map(entry -> entry.getKey() + " - " + entry.getValue().description() + "\n")
+        return commands.entrySet().stream().map(entry -> entry.getKey() + DASH + entry.getValue().description() + "\n")
             .collect(
-                Collectors.joining());
+                Collectors.joining()) + command() + DASH + description();
     }
 }

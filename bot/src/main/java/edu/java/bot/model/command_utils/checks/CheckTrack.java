@@ -2,6 +2,7 @@ package edu.java.bot.model.command_utils.checks;
 
 import java.net.URL;
 import java.util.List;
+
 public final class CheckTrack {
     private CheckTrack() {
     }
