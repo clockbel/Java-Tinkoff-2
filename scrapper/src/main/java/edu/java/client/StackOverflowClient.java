@@ -1,7 +1,7 @@
 package edu.java.client;
 
-import edu.java.response.stackoverflow.AnswerResponse;
-import edu.java.response.stackoverflow.QuestionResponse;
+import edu.java.dto.response.stackoverflow.AnswerResponse;
+import edu.java.dto.response.stackoverflow.QuestionResponse;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
