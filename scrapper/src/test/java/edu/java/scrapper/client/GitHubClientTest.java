@@ -24,12 +24,7 @@ public class GitHubClientTest {
     public void setUp() {
         wireMockServer = new WireMockServer();
         wireMockServer.start();
-
-        WebClient webClient = WebClient.builder()
-            .baseUrl(wireMockServer.baseUrl())
-            .build();
-
-        githubClient = new GitHubClient(webClient);
+        githubClient = GitHubClient.create(wireMockServer.baseUrl());
     }
 
     @AfterEach

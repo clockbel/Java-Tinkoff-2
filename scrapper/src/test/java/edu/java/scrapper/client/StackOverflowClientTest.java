@@ -1,6 +1,7 @@
 package edu.java.scrapper.client;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
+import edu.java.client.GitHubClient;
 import edu.java.client.StackOverflowClient;
 import edu.java.dto.response.stackoverflow.AnswerResponse;
 import edu.java.dto.response.stackoverflow.OwnerInformation;
@@ -26,12 +27,7 @@ public class StackOverflowClientTest {
     public void setUp() {
         wireMockServer = new WireMockServer();
         wireMockServer.start();
-
-        WebClient webClient = WebClient.builder()
-            .baseUrl(wireMockServer.baseUrl())
-            .build();
-
-        stackOverflowClient = new StackOverflowClient(webClient);
+        stackOverflowClient = StackOverflowClient.create(wireMockServer.baseUrl());
     }
 
     @AfterEach
