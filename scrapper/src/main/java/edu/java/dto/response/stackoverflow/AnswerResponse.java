@@ -1,7 +1,8 @@
-package edu.java.response.stackoverflow;
+package edu.java.dto.response.stackoverflow;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import java.time.OffsetDateTime;
 import java.util.List;
 import lombok.Getter;
@@ -11,22 +12,14 @@ public record AnswerResponse(
     List<AnswerInformation> items) {
     @Getter
     @Setter
+    @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
     public static class AnswerInformation {
-        @JsonProperty("owner")
         private OwnerInformation owner;
-
-        @JsonProperty("last_activity_date")
         @JsonFormat(shape = JsonFormat.Shape.NUMBER)
         private OffsetDateTime lastActivityDate;
-
-        @JsonProperty("creation_date")
         @JsonFormat(shape = JsonFormat.Shape.NUMBER)
         private OffsetDateTime creationDate;
-
-        @JsonProperty("answer_id")
         private long answerId;
-
-        @JsonProperty("question_id")
         private long questionId;
     }
 }

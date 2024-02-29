@@ -2,8 +2,8 @@ package edu.java.scrapper.client;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
 import edu.java.client.StackOverflowClient;
-import edu.java.response.stackoverflow.AnswerResponse;
-import edu.java.response.stackoverflow.OwnerInformation;
+import edu.java.dto.response.stackoverflow.AnswerResponse;
+import edu.java.dto.response.stackoverflow.OwnerInformation;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
