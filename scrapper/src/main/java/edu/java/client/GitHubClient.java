@@ -9,10 +9,11 @@ import reactor.core.publisher.Mono;
 public class GitHubClient {
 
     private final WebClient webClient;
+    private final static String DEFAULT_URL = "https://api.github.com";
 
     public static GitHubClient create(String baseUrl) {
         WebClient webClient = WebClient.builder()
-            .baseUrl(baseUrl)
+            .baseUrl(baseUrl == null ? DEFAULT_URL : baseUrl)
             .build();
         return new GitHubClient(webClient);
     }

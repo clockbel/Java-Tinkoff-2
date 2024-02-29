@@ -10,10 +10,11 @@ import reactor.core.publisher.Mono;
 public class StackOverflowClient {
 
     private final WebClient webClient;
+    private final static String DEFAULT_URL = "https://api.stackexchange.com/2.3";
 
     public static StackOverflowClient create(String baseUrl) {
         WebClient webClient = WebClient.builder()
-            .baseUrl(baseUrl)
+            .baseUrl(baseUrl == null ? DEFAULT_URL : baseUrl)
             .build();
         return new StackOverflowClient(webClient);
     }
