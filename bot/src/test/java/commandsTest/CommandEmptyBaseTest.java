@@ -29,11 +29,10 @@ public class CommandEmptyBaseTest {
     @Autowired UserBase userBase;
     @Autowired Map<String, Command> commands;
 
-    @Order(0)
     @Test
     @DisplayName("Check base")
     void testBase() {
-        var id_user2 = 2L;
+        var id_user2 = 5L;
         mockChat(id_user2);
         assertThat(userBase.findById(update)).isEmpty();
     }

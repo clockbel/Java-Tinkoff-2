@@ -11,7 +11,6 @@ import edu.java.bot.model.command_utils.commands.CommandsOutputMessage;
 import edu.java.bot.repository.UserBase;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +50,7 @@ public class CommandTrackTest {
     @Test
     @DisplayName("Track command 3")
     void testTrack3() {
-        var id_user2 = 2L;
+        var id_user2 = 4L;
         mockChat(id_user2);
         commands.get("/start").handle(update);
         mockChatWithText(id_user2, "/track https://github.com/clockbel/Java-Tinkoff");

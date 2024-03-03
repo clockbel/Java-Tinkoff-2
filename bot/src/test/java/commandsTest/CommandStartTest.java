@@ -30,7 +30,7 @@ public class CommandStartTest {
     @Test
     @DisplayName("Start command 1")
     void testStart1() {
-        var id_user2 = 2L;
+        var id_user2 = 7L;
         mockChat(id_user2);
         SendMessage message = commands.get("/start").handle(update);
         SendMessage result_message =
