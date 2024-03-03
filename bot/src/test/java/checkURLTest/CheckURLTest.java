@@ -1,3 +1,5 @@
+package checkURLTest;
+
 import edu.java.bot.model.url_utils.CheckURL;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

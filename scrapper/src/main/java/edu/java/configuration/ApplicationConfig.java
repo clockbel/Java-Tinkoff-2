@@ -13,8 +13,8 @@ public record ApplicationConfig(
     @Bean
     Scheduler scheduler,
     String gitHubBaseUrl,
-    String stackOverflowBaseUrl
-
+    String stackOverflowBaseUrl,
+    @NotNull String botUrl
 ) {
     public record Scheduler(boolean enable, @NotNull Duration interval, @NotNull Duration forceCheckDelay) {
     }
