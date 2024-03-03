@@ -13,7 +13,7 @@ import java.net.URI;
 
 public class LinksControllerTest {
     private final WebTestClient webTestClient = WebTestClient.bindToController(new LinksController()).build();
-    private final URI defaultLink = URI.create("aa");
+    private final URI defaultLink = URI.create("a");
     private final int defaultId = 1;
 
     @Test
