@@ -1,11 +1,14 @@
 app:
   telegram-token: ${APP_TELEGRAM_TOKEN}
+  scrapper-url: http://localhost:8080
 
 spring:
   application:
     name: bot
   jackson:
     time-zone: UTC
+
+springdoc.swagger-ui.path: /swagger-ui.html
 
 server:
   port: 8090
