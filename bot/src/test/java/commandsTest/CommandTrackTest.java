@@ -27,20 +27,6 @@ public class CommandTrackTest {
     @MockBean Update update;
     @Autowired UserBase userBase;
     @Autowired Map<String, Command> commands;
-
-    @Order(1)
-    @Test
-    @DisplayName("Start command 1")
-    void testStart1() {
-        var id_user2 = 2L;
-        mockChat(id_user2);
-        SendMessage message = commands.get("/start").handle(update);
-        SendMessage result_message =
-            new SendMessage(update.message().chat().id(), CommandsOutputMessage.REGISTRATION_MESSAGE);
-        assertThat(message.getParameters()).isEqualTo(result_message.getParameters());
-    }
-
-    @Order(2)
     @Test
     @DisplayName("Track command 1")
     void testTrack1() {
@@ -51,34 +37,34 @@ public class CommandTrackTest {
             new SendMessage(update.message().chat().id(), CommandsOutputMessage.USER_NOT_IN_BASE);
         assertThat(message.getParameters()).isEqualTo(result_message.getParameters());
     }
-
-    @Order(3)
     @Test
     @DisplayName("Track command 2")
     void testTrack2() {
         var id_user2 = 2L;
+        mockChat(id_user2);
+        commands.get("/start").handle(update);
         mockChatWithText(id_user2, "/track 1");
         SendMessage message = commands.get("/track").handle(update);
         SendMessage result_message = new SendMessage(update.message().chat().id(), CommandsOutputMessage.URL_INCORRECT);
         assertThat(message.getParameters()).isEqualTo(result_message.getParameters());
     }
-
-    @Order(4)
     @Test
     @DisplayName("Track command 3")
     void testTrack3() {
         var id_user2 = 2L;
+        mockChat(id_user2);
+        commands.get("/start").handle(update);
         mockChatWithText(id_user2, "/track https://github.com/clockbel/Java-Tinkoff");
         SendMessage message = commands.get("/track").handle(update);
         SendMessage result_message = new SendMessage(update.message().chat().id(), CommandsOutputMessage.URL_APPEND);
         assertThat(message.getParameters()).isEqualTo(result_message.getParameters());
     }
-
-    @Order(5)
     @Test
     @DisplayName("Track command 4")
     void testTrack4() {
         var id_user2 = 2L;
+        mockChat(id_user2);
+        commands.get("/start").handle(update);
         mockChatWithText(id_user2, "/track https://github.com/clockbel/Java-Tinkoff");
         SendMessage message = commands.get("/track").handle(update);
         SendMessage result_message = new SendMessage(update.message().chat().id(), CommandsOutputMessage.URL_IN_BASE);

@@ -28,23 +28,12 @@ public class CommandHelpTest {
     @MockBean Update update;
     @Autowired UserBase userBase;
     @Autowired Map<String, Command> commands;
-
-    @Order(1)
-    @Test
-    @DisplayName("Start command 1")
-    void testStart1() {
-        var id_user2 = 2L;
-        mockChat(id_user2);
-        SendMessage message = commands.get("/start").handle(update);
-        SendMessage result_message =
-            new SendMessage(update.message().chat().id(), CommandsOutputMessage.REGISTRATION_MESSAGE);
-        assertThat(message.getParameters()).isEqualTo(result_message.getParameters());
-    }
-    @Order(13)
     @Test
     @DisplayName("Help command 1")
     void testHelp1() {
         var id_user2 = 2L;
+        mockChat(id_user2);
+        commands.get("/start").handle(update);
         mockChatWithText(id_user2, "/help");
         SendMessage message = commands.get("/help").handle(update);
         SendMessage result_message =

@@ -28,19 +28,6 @@ public class CommandUntrackTest {
     @MockBean Update update;
     @Autowired UserBase userBase;
     @Autowired Map<String, Command> commands;
-
-    @Order(1)
-    @Test
-    @DisplayName("Start command 1")
-    void testStart1() {
-        var id_user2 = 2L;
-        mockChat(id_user2);
-        SendMessage message = commands.get("/start").handle(update);
-        SendMessage result_message =
-            new SendMessage(update.message().chat().id(), CommandsOutputMessage.REGISTRATION_MESSAGE);
-        assertThat(message.getParameters()).isEqualTo(result_message.getParameters());
-    }
-    @Order(2)
     @Test
     @DisplayName("Untrack command 1")
     void testUntrack1() {
@@ -51,21 +38,23 @@ public class CommandUntrackTest {
             new SendMessage(update.message().chat().id(), CommandsOutputMessage.USER_NOT_IN_BASE);
         assertThat(message.getParameters()).isEqualTo(result_message.getParameters());
     }
-    @Order(3)
     @Test
     @DisplayName("Untrack command 2")
     void testUntrack2() {
         var id_user2 = 2L;
+        mockChat(id_user2);
+        commands.get("/start").handle(update);
         mockChatWithText(id_user2, "/untrack 1");
         SendMessage message = commands.get("/untrack").handle(update);
         SendMessage result_message = new SendMessage(update.message().chat().id(), CommandsOutputMessage.URL_INCORRECT);
         assertThat(message.getParameters()).isEqualTo(result_message.getParameters());
     }
-    @Order(4)
     @Test
     @DisplayName("Untrack command 3")
     void testUntrack3() {
         var id_user2 = 2L;
+        mockChat(id_user2);
+        commands.get("/start").handle(update);
         mockChatWithText(id_user2, "/track https://github.com/clockbel/Java-Tinkoff");
         commands.get("/track").handle(update);
         mockChatWithText(id_user2, "/untrack https://github.com/clockbel/Java-Tinkoff");
@@ -73,11 +62,12 @@ public class CommandUntrackTest {
         SendMessage result_message = new SendMessage(update.message().chat().id(), CommandsOutputMessage.URL_DELETE);
         assertThat(message.getParameters()).isEqualTo(result_message.getParameters());
     }
-    @Order(5)
     @Test
     @DisplayName("Untrack command 4")
     void testUntrack4() {
         var id_user2 = 2L;
+        mockChat(id_user2);
+        commands.get("/start").handle(update);
         mockChatWithText(id_user2, "/untrack https://github.com/clockbel/Java-Tinkoff");
         SendMessage message = commands.get("/untrack").handle(update);
         SendMessage result_message =

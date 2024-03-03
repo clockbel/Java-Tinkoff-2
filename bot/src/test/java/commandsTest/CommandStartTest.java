@@ -27,17 +27,6 @@ public class CommandStartTest {
     @MockBean Update update;
     @Autowired UserBase userBase;
     @Autowired Map<String, Command> commands;
-
-    @Order(0)
-    @Test
-    @DisplayName("Check base")
-    void testBase() {
-        var id_user2 = 2L;
-        mockChat(id_user2);
-        assertThat(userBase.findById(update)).isEmpty();
-    }
-
-    @Order(1)
     @Test
     @DisplayName("Start command 1")
     void testStart1() {
@@ -49,11 +38,12 @@ public class CommandStartTest {
         assertThat(message.getParameters()).isEqualTo(result_message.getParameters());
     }
 
-    @Order(2)
     @Test
     @DisplayName("Start command 2")
     void testStart2() {
         var id_user2 = 2L;
+        mockChat(id_user2);
+        commands.get("/start").handle(update);
         mockChat(id_user2);
         SendMessage message = commands.get("/start").handle(update);
         SendMessage result_message = new SendMessage(update.message().chat().id(), CommandsOutputMessage.START_MESSAGE);
