@@ -16,7 +16,7 @@ public class BotControllerTest {
     private final WebTestClient webTestClient = WebTestClient.bindToController(new UpdateController()).build();
     private final Long defaultId = 1L;
     private final URI defaultUrl = URI.create("aa");
-    private final String defaultDescription = "aa";
+    private final String defaultDescription = "aaa";
     private final List<Long> defaultList = List.of(1L, 2L);
 
     private LinkUpdateRequest getLinkUpdateRequest(long id, URI url, String description, List<Long> tgChatIds) {
