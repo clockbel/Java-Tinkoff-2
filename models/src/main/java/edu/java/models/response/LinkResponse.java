@@ -5,5 +5,5 @@ import java.net.URI;
 
 public record LinkResponse(
     Long id,
-    @NotNull URI uri) {
+    @NotNull URI url) {
 }
