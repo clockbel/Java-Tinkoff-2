@@ -1,5 +1,6 @@
 package edu.java.bot.exception;
 
+import edu.java.bot.exception.errors.DataBaseException;
 import edu.java.bot.exception.errors.NotFoundIdChatException;
 import edu.java.models.response.ApiErrorResponse;
 import java.util.Arrays;
@@ -41,5 +42,20 @@ public class ExceptionApiHandler {
                 .collect(Collectors.toList())
         );
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(DataBaseException.class)
+    public ResponseEntity<ApiErrorResponse> handleDataBaseException(DataBaseException ex) {
+        ApiErrorResponse errorResponse = new ApiErrorResponse(
+            "Ошибка сервера",
+            HttpStatus.INTERNAL_SERVER_ERROR.toString(),
+            "Server error",
+            ex.getMessage(),
+            Arrays.stream(ex.getStackTrace())
+                .map(StackTraceElement::toString)
+                .collect(Collectors.toList())
+        );
+        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
