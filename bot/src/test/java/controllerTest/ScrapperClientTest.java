@@ -113,7 +113,7 @@ public class ScrapperClientTest {
                          "links":[
                              {
                                  "id":1,
-                                 "uri":"link"
+                                 "url":"link"
                              }
                          ],
                          "size":1
@@ -152,11 +152,11 @@ public class ScrapperClientTest {
                 .withBody("""
                     {
                         "id":1,
-                        "uri":"1"
+                        "url":"1"
                     }
                     """)));
         ResponseEntity<LinkResponse> response = scrapperClient.addLink(1L, new AddLinkRequest(URI.create("1")));
-        assertThat(response.getBody().uri()).isEqualTo(URI.create("1"));
+        assertThat(response.getBody().url()).isEqualTo(URI.create("1"));
         assertThat(response.getBody().id()).isEqualTo(1L);
     }
 
@@ -184,11 +184,11 @@ public class ScrapperClientTest {
                 .withBody("""
                     {
                         "id":1,
-                        "uri":"1"
+                        "url":"1"
                     }
                     """)));
         ResponseEntity<LinkResponse> response = scrapperClient.deleteLink(1L, new RemoveLinkRequest(URI.create("1")));
-        assertThat(response.getBody().uri().getPath()).isEqualTo("1");
+        assertThat(response.getBody().url().getPath()).isEqualTo("1");
         assertThat(response.getBody().id()).isEqualTo(1);
     }
 
