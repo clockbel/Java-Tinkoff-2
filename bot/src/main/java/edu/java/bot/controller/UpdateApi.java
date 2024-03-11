@@ -24,6 +24,10 @@ public interface UpdateApi {
         @ApiResponse(responseCode = "404",
                      description = "Чат с заданным id не найден",
                      content = @Content(mediaType = "application/json",
+                                        schema = @Schema(implementation = ApiErrorResponse.class))),
+        @ApiResponse(responseCode = "500",
+                     description = "Ошибка сервера",
+                     content = @Content(mediaType = "application/json",
                                         schema = @Schema(implementation = ApiErrorResponse.class)))})
     @PostMapping("/updates")
     ResponseEntity<Void> sendUpdate(@Valid @RequestBody LinkUpdateRequest linkUpdateRequest);
