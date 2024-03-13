@@ -60,6 +60,10 @@ public interface LinksApi {
         @ApiResponse(responseCode = "404",
                      description = "Чат не существует",
                      content = @Content(mediaType = "application/json",
+                                        schema = @Schema(implementation = ApiErrorResponse.class))),
+        @ApiResponse(responseCode = "500",
+                     description = "Ошибка сервера",
+                     content = @Content(mediaType = "application/json",
                                         schema = @Schema(implementation = ApiErrorResponse.class)))})
     @GetMapping("/links")
     ResponseEntity<ListLinksResponse> linksGet(@Min(1) @RequestHeader("Tg-Chat-Id") Long tgChatId);
@@ -81,6 +85,10 @@ public interface LinksApi {
                                         schema = @Schema(implementation = ApiErrorResponse.class))),
         @ApiResponse(responseCode = "409",
                      description = "Ссылка уже добавлена",
+                     content = @Content(mediaType = "application/json",
+                                        schema = @Schema(implementation = ApiErrorResponse.class))),
+        @ApiResponse(responseCode = "500",
+                     description = "Ошибка сервера",
                      content = @Content(mediaType = "application/json",
                                         schema = @Schema(implementation = ApiErrorResponse.class)))})
     @PostMapping("/links")
