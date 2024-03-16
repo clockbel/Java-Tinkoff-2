@@ -13,7 +13,7 @@
     <changeSet id="create_links_table" author="clockbel">
         <sqlFile path="sql/create_links_table.sql"/>
     </changeSet>
-    <changeSet id="create_chat_link_table" author="clockbel">
-        <sqlFile path="sql/create_chat_link_table.sql"/>
+    <changeSet id="create_subscription_table" author="clockbel">
+        <sqlFile path="sql/create_subscription_table.sql"/>
     </changeSet>
 </databaseChangeLog>
