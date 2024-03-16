@@ -61,9 +61,11 @@ public class CommandTrackTest {
     @Test
     @DisplayName("Track command 4")
     void testTrack4() {
-        var id_user2 = 2L;
+        var id_user2 = 5L;
         mockChat(id_user2);
         commands.get("/start").handle(update);
+        mockChatWithText(id_user2, "/track https://github.com/clockbel/Java-Tinkoff");
+        commands.get("/track").handle(update);
         mockChatWithText(id_user2, "/track https://github.com/clockbel/Java-Tinkoff");
         SendMessage message = commands.get("/track").handle(update);
         SendMessage result_message = new SendMessage(update.message().chat().id(), CommandsOutputMessage.URL_IN_BASE);
