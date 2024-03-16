@@ -25,6 +25,10 @@ public interface TgChatApi {
         @ApiResponse(responseCode = "409",
                      description = "Чат уже зарегистрирован",
                      content = @Content(mediaType = "application/json",
+                                        schema = @Schema(implementation = ApiErrorResponse.class))),
+        @ApiResponse(responseCode = "500",
+                     description = "Ошибка сервера",
+                     content = @Content(mediaType = "application/json",
                                         schema = @Schema(implementation = ApiErrorResponse.class)))})
     @PostMapping("/tg-chat/{id}")
     ResponseEntity<Void> tgChatIdPost(@Min(1) @PathVariable Long id);
@@ -40,6 +44,10 @@ public interface TgChatApi {
 
         @ApiResponse(responseCode = "404",
                      description = "Чат с заданным id не найден",
+                     content = @Content(mediaType = "application/json",
+                                        schema = @Schema(implementation = ApiErrorResponse.class))),
+        @ApiResponse(responseCode = "500",
+                     description = "Ошибка сервера",
                      content = @Content(mediaType = "application/json",
                                         schema = @Schema(implementation = ApiErrorResponse.class)))})
     @DeleteMapping("/tg-chat/{id}")
