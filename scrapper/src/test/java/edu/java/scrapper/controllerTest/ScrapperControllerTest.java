@@ -9,15 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.web.reactive.server.WebTestClient;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.BodyInserters;
 import java.net.URI;
 
 @SpringBootTest
-@Rollback
-@Transactional
 public class ScrapperControllerTest {
     private final WebTestClient webTestClient;
     private final URI defaultLink = URI.create("a");
