@@ -1,27 +1,71 @@
 package edu.java.scrapper.controllerTest;
 
-import edu.java.controller.LinksController;
+import edu.java.controller.ScrapperApiController;
 import edu.java.models.request.AddLinkRequest;
 import edu.java.models.request.RemoveLinkRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.BodyInserters;
 import java.net.URI;
 
-public class LinksControllerTest {
-    private final WebTestClient webTestClient = WebTestClient.bindToController(new LinksController()).build();
+@SpringBootTest
+@Rollback
+@Transactional
+public class ScrapperControllerTest {
+    private final WebTestClient webTestClient;
     private final URI defaultLink = URI.create("a");
-    private final int defaultId = 1;
+    private final long defaultId = 1L;
+
+    @Autowired
+    public ScrapperControllerTest(ScrapperApiController scrapperApiController) {
+        webTestClient = WebTestClient.bindToController(scrapperApiController).build();
+    }
+
+    @Test
+    @DisplayName("Регистрация чата, корректные данные")
+    void registerChat() {
+        webTestClient.post()
+            .uri("/tg-chat/{id}", 1L)
+            .exchange().expectStatus().isOk();
+    }
+
+    @Test
+    @DisplayName("Удаление чата, корректные данные")
+    void deleteChat() {
+        webTestClient.delete()
+            .uri("/tg-chat/{id}", 1L)
+            .exchange().expectStatus().isOk();
+    }
+
+    @Test
+    @DisplayName("Регистрация чата, не корректные данные ID")
+    void registerChatWhenInvalidId() {
+        webTestClient.post()
+            .uri("/tg-chat/{id}", -1L)
+            .exchange().expectStatus().isBadRequest();
+    }
+
+    @Test
+    @DisplayName("Удаление чата, не корректные данные ID")
+    void deleteChatWhenInvalidId() {
+        webTestClient.delete()
+            .uri("/tg-chat/{id}", -1L)
+            .exchange().expectStatus().isBadRequest();
+    }
 
     @Test
     @DisplayName("Получить все отслеживаемые ссылки, корректные данные")
     void getAllLinks() {
         webTestClient.get()
             .uri("/links")
-            .header("Tg-Chat-Id", String.valueOf(1L))
+            .header("Tg-Chat-Id", String.valueOf(defaultId))
             .exchange().expectStatus().isOk();
     }
 
@@ -30,7 +74,7 @@ public class LinksControllerTest {
     void addLink() {
         webTestClient.post()
             .uri("/links")
-            .header("Tg-Chat-Id", String.valueOf(1L))
+            .header("Tg-Chat-Id", String.valueOf(defaultId))
             .contentType(MediaType.APPLICATION_JSON)
             .body(BodyInserters.fromValue(new AddLinkRequest(defaultLink)))
             .exchange().expectStatus().isOk();
@@ -41,7 +85,7 @@ public class LinksControllerTest {
     void removeLink() {
         webTestClient.method(HttpMethod.DELETE)
             .uri("/links")
-            .header("Tg-Chat-Id", String.valueOf(1L))
+            .header("Tg-Chat-Id", String.valueOf(defaultId))
             .contentType(MediaType.APPLICATION_JSON)
             .body(BodyInserters.fromValue(new RemoveLinkRequest(defaultLink)))
             .exchange().expectStatus().isOk();

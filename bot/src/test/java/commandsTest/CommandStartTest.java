@@ -11,7 +11,6 @@ import edu.java.bot.model.command_utils.commands.CommandsOutputMessage;
 import edu.java.bot.repository.UserBase;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +29,7 @@ public class CommandStartTest {
     @Test
     @DisplayName("Start command 1")
     void testStart1() {
-        var id_user2 = 7L;
+        var id_user2 = 17L;
         mockChat(id_user2);
         SendMessage message = commands.get("/start").handle(update);
         SendMessage result_message =
@@ -41,7 +40,7 @@ public class CommandStartTest {
     @Test
     @DisplayName("Start command 2")
     void testStart2() {
-        var id_user2 = 2L;
+        var id_user2 = 10L;
         mockChat(id_user2);
         commands.get("/start").handle(update);
         mockChat(id_user2);

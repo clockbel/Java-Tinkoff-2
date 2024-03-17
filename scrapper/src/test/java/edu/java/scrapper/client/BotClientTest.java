@@ -19,7 +19,6 @@ public class BotClientTest {
 
     @Test
     public void testSendUpdate() {
-
         stubFor(post(urlEqualTo("/updates"))
             .willReturn(aResponse()
                 .withStatus(200)

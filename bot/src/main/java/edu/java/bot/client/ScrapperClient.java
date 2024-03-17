@@ -9,7 +9,6 @@ import edu.java.models.response.ListLinksResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatusCode;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
@@ -28,19 +27,19 @@ public class ScrapperClient {
         return new ScrapperClient(webClient);
     }
 
-    public ResponseEntity<Void> registerChat(long id) {
-        return webClient
+    public void registerChat(long id) {
+        webClient
             .post()
             .uri(uriBuilder -> uriBuilder.path("tg-chat/{id}").build(id))
             .retrieve()
             .onStatus(HttpStatusCode::is4xxClientError, clientResponse -> clientResponse
                 .bodyToMono(ApiErrorResponse.class)
                 .flatMap(apiErrorResponse -> Mono.error(new ApiErrorResponseException(apiErrorResponse))))
-            .toEntity(Void.class).block();
+            .bodyToMono(Void.class).block();
     }
 
-    public ResponseEntity<Void> deleteChat(long id) {
-        return webClient
+    public void deleteChat(long id) {
+        webClient
             .delete()
             .uri(uriBuilder -> uriBuilder.path("/tg-chat/{id}").build(id))
             .retrieve()
@@ -50,10 +49,10 @@ public class ScrapperClient {
                     .bodyToMono(ApiErrorResponse.class)
                     .flatMap(apiErrorResponse -> Mono.error(new ApiErrorResponseException(apiErrorResponse)))
             )
-            .toEntity(Void.class).block();
+            .bodyToMono(Void.class).block();
     }
 
-    public ResponseEntity<ListLinksResponse> getLinks(long id) {
+    public ListLinksResponse getLinks(long id) {
         return webClient
             .get()
             .uri(LINKS)
@@ -65,11 +64,11 @@ public class ScrapperClient {
                     .bodyToMono(ApiErrorResponse.class)
                     .flatMap(apiErrorResponse -> Mono.error(new ApiErrorResponseException(apiErrorResponse)))
             )
-            .toEntity(ListLinksResponse.class)
+            .bodyToMono(ListLinksResponse.class)
             .block();
     }
 
-    public ResponseEntity<LinkResponse> addLink(long id, AddLinkRequest addLinkRequest) {
+    public LinkResponse addLink(long id, AddLinkRequest addLinkRequest) {
         return webClient
             .post()
             .uri(LINKS)
@@ -82,11 +81,11 @@ public class ScrapperClient {
                     .bodyToMono(ApiErrorResponse.class)
                     .flatMap(apiErrorResponse -> Mono.error(new ApiErrorResponseException(apiErrorResponse)))
             )
-            .toEntity(LinkResponse.class)
+            .bodyToMono(LinkResponse.class)
             .block();
     }
 
-    public ResponseEntity<LinkResponse> deleteLink(long id, RemoveLinkRequest removeLinkRequest) {
+    public LinkResponse deleteLink(long id, RemoveLinkRequest removeLinkRequest) {
         return webClient
             .method(HttpMethod.DELETE)
             .uri(LINKS)
@@ -99,7 +98,7 @@ public class ScrapperClient {
                     .bodyToMono(ApiErrorResponse.class)
                     .flatMap(apiErrorResponse -> Mono.error(new ApiErrorResponseException(apiErrorResponse)))
             )
-            .toEntity(LinkResponse.class)
+            .bodyToMono(LinkResponse.class)
             .block();
     }
 }

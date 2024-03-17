@@ -119,8 +119,8 @@ public class ScrapperClientTest {
                          "size":1
                      }
                     """)));
-        ResponseEntity<ListLinksResponse> response = scrapperClient.getLinks(1L);
-        assertThat(response.getBody().size()).isEqualTo(1);
+        ListLinksResponse response = scrapperClient.getLinks(1L);
+        assertThat(response.size()).isEqualTo(1);
     }
 
     @Test
@@ -155,9 +155,9 @@ public class ScrapperClientTest {
                         "url":"1"
                     }
                     """)));
-        ResponseEntity<LinkResponse> response = scrapperClient.addLink(1L, new AddLinkRequest(URI.create("1")));
-        assertThat(response.getBody().url()).isEqualTo(URI.create("1"));
-        assertThat(response.getBody().id()).isEqualTo(1L);
+        LinkResponse response = scrapperClient.addLink(1L, new AddLinkRequest(URI.create("1")));
+        assertThat(response.url()).isEqualTo(URI.create("1"));
+        assertThat(response.id()).isEqualTo(1L);
     }
 
     @Test
@@ -187,9 +187,9 @@ public class ScrapperClientTest {
                         "url":"1"
                     }
                     """)));
-        ResponseEntity<LinkResponse> response = scrapperClient.deleteLink(1L, new RemoveLinkRequest(URI.create("1")));
-        assertThat(response.getBody().url().getPath()).isEqualTo("1");
-        assertThat(response.getBody().id()).isEqualTo(1);
+        LinkResponse response = scrapperClient.deleteLink(1L, new RemoveLinkRequest(URI.create("1")));
+        assertThat(response.url().getPath()).isEqualTo("1");
+        assertThat(response.id()).isEqualTo(1);
     }
 
     @Test

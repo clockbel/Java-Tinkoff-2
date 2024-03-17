@@ -6,7 +6,6 @@ import edu.java.models.response.ApiErrorResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
@@ -23,8 +22,8 @@ public class BotClient {
         return new BotClient(webClient);
     }
 
-    public ResponseEntity<Void> sendUpdate(LinkUpdateRequest linkUpdateRequest) {
-        return webClient.post()
+    public void sendUpdate(LinkUpdateRequest linkUpdateRequest) {
+        webClient.post()
             .uri("/updates")
             .contentType(MediaType.APPLICATION_JSON)
             .body(BodyInserters.fromValue(linkUpdateRequest
@@ -32,7 +31,7 @@ public class BotClient {
             .retrieve().onStatus(HttpStatus.BAD_REQUEST::equals, clientResponse -> clientResponse
                 .bodyToMono(ApiErrorResponse.class)
                 .flatMap(apiErrorResponse -> Mono.error(new ApiErrorResponseException(apiErrorResponse))))
-            .toEntity(Void.class)
+            .bodyToMono(Void.class)
             .block();
     }
 }
